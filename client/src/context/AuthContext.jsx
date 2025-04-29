@@ -1,8 +1,8 @@
 import { createContext, useState, useEffect } from 'react';
 import axios from 'axios';
 
-// Set base URL for axios
-axios.defaults.baseURL = 'http://localhost:5001';
+// Set base URL for axios from environment variable or fallback to localhost
+axios.defaults.baseURL = import.meta.env.VITE_API_URL || 'http://localhost:5001';
 
 const AuthContext = createContext();
 
