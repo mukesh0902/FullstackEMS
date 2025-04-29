@@ -14,53 +14,52 @@ const EmployeeDashboard = () => {
       try {
         setLoading(true);
         
-        // In a real application, you would fetch actual employee data from the API
-        // For demo purposes, we'll set dummy data
-        // const res = await axios.get('/api/employee/me');
-        // setEmployeeData(res.data);
+        // Fetch actual employee data from the API
+        const res = await axios.get('/api/employees/me');
+        setEmployeeData(res.data.data);
         
-        // Dummy data
+        setLoading(false);
+      } catch (err) {
+        console.error('Error fetching employee data:', err.message);
+        setLoading(false);
+        
+        // Fallback to dummy data if API call fails
         setEmployeeData({
-          id: '1',
-          firstName: 'John',
-          lastName: 'Doe',
-          position: 'Software Developer',
+          id: user?.id || '1',
+          firstName: user?.name?.split(' ')[0] || 'John',
+          lastName: user?.name?.split(' ')[1] || 'Doe',
+          position: 'Employee',
           department: {
-            name: 'IT Department'
+            name: 'Department'
           },
-          joinDate: '2023-01-15',
+          joinDate: new Date().toISOString(),
           status: 'active',
           leaves: {
-            approved: 5,
-            pending: 2,
-            rejected: 1,
-            available: 15
+            approved: 0,
+            pending: 0,
+            rejected: 0,
+            available: 20
           },
           salary: {
             current: {
-              month: 'April',
-              year: '2025',
-              amount: 5000,
+              month: new Date().toLocaleString('default', { month: 'long' }),
+              year: new Date().getFullYear().toString(),
+              amount: 0,
               status: 'pending'
             },
             last: {
-              month: 'March',
-              year: '2025',
-              amount: 5000,
+              month: new Date(new Date().setMonth(new Date().getMonth() - 1)).toLocaleString('default', { month: 'long' }),
+              year: new Date().getFullYear().toString(),
+              amount: 0,
               status: 'paid'
             }
           }
         });
-        
-        setLoading(false);
-      } catch (err) {
-        console.error(err.message);
-        setLoading(false);
       }
     };
 
     fetchEmployeeData();
-  }, []);
+  }, [user]);
 
   if (loading) {
     return (
