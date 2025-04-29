@@ -1,0 +1,22 @@
+{
+  "name": "employee-management-system",
+  "version": "1.0.0",
+  "description": "MERN Stack Employee Management System",
+  "main": "index.js",
+  "scripts": {
+    "server": "cd server && npm run dev",
+    "client": "cd client && npm run dev",
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "install-all": "npm i && cd server && npm i && cd ../client && npm i"
+  },
+  "keywords": [
+    "mern",
+    "employee",
+    "management"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "concurrently": "^8.2.2"
+  }
+}
